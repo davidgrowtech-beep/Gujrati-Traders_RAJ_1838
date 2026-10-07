@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Gujarati Trader's Learning Station | ગુજરાતી ટ્રેડર</title>
+<meta name="description" content="ગુજરાતી ટ્રેડર્સ માટે મફત દૈનિક માર્કેટ શીખ — Free daily market learning for Gujarati traders on Telegram.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://connect.facebook.net">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#140A2E;
+    --bg-2:#1E0F45;
+    --card:rgba(255,255,255,0.06);
+    --line:rgba(255,255,255,0.12);
+    --text:#FFF7EC;
+    --dim:rgba(255,247,236,0.72);
+    --saffron:#FF9933;
+    --pink:#FF3D8B;
+    --violet:#8B5CF6;
+    --cyan:#22D3EE;
+    --green:#22C55E;
+    --gold:#FFD23F;
+    --red:#F43F5E;
+    --maxw:540px;
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;color:var(--text);
+    font-family:'Poppins','Baloo Bhai 2',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;line-height:1.5;
+    background:
+      radial-gradient(600px 320px at 10% -5%, rgba(255,61,139,0.30), transparent 60%),
+      radial-gradient(600px 360px at 100% 10%, rgba(139,92,246,0.35), transparent 60%),
+      radial-gradient(600px 400px at 50% 110%, rgba(255,153,51,0.25), transparent 60%),
+      linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+    background-attachment:fixed;
+    min-height:100vh;
+  }
+  .gu{font-family:'Baloo Bhai 2','Poppins',sans-serif;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 18px;}
+
+  /* ---------- HEADER ---------- */
+  header.top{
+    max-width:var(--maxw);margin:0 auto;
+    padding:16px 18px 14px;display:flex;align-items:center;gap:14px;
+    border-bottom:1px solid var(--line);
+  }
+  .logo-ring{
+    position:relative;width:76px;height:76px;flex-shrink:0;border-radius:50%;
+    padding:3px;
+    background:conic-gradient(var(--saffron),var(--pink),var(--violet),var(--cyan),var(--green),var(--gold),var(--saffron));
+    animation:spin 6s linear infinite;
+  }
+  .logo-ring img{
+    width:100%;height:100%;border-radius:50%;object-fit:cover;object-position:top center;
+    border:3px solid var(--bg);display:block;
+    animation:spin 6s linear infinite reverse; /* keep photo upright */
+    background:#2a1a55;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .brand-name{font-weight:800;font-size:17px;line-height:1.2;}
+  .brand-gu{font-size:15px;color:var(--gold);font-weight:700;margin-top:2px;}
+  .status-pill{
+    margin-left:auto;display:flex;align-items:center;gap:6px;
+    font-size:11px;font-weight:600;color:#bbf7d0;
+    background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.4);
+    padding:5px 10px;border-radius:100px;white-space:nowrap;
+  }
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(34,197,94,0.3);animation:blink 1.2s infinite;}
+  @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.25;}}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:26px 0 6px;text-align:center;}
+  .hero-logo{
+    width:132px;height:132px;margin:0 auto 18px;border-radius:50%;padding:4px;
+    background:conic-gradient(var(--saffron),var(--pink),var(--violet),var(--cyan),var(--green),var(--gold),var(--saffron));
+    box-shadow:0 0 40px rgba(255,61,139,0.45);
+    animation:spin 8s linear infinite;
+  }
+  .hero-logo img{width:100%;height:100%;border-radius:50%;object-fit:cover;object-position:top center;border:4px solid var(--bg);display:block;animation:spin 8s linear infinite reverse;background:#2a1a55;}
+  .eyebrow{
+    display:inline-block;font-size:12.5px;font-weight:700;
+    padding:6px 14px;border-radius:100px;margin-bottom:14px;
+    background:linear-gradient(90deg,rgba(255,153,51,0.2),rgba(255,61,139,0.2));
+    border:1px solid rgba(255,153,51,0.5);color:var(--gold);
+  }
+  .hero h1{margin:0 0 6px;font-size:30px;line-height:1.2;font-weight:800;}
+  .hero h1 .grad{
+    background:linear-gradient(90deg,var(--gold),var(--saffron),var(--pink),var(--violet));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero .h1-en{font-size:18px;font-weight:600;color:var(--dim);margin:0 0 14px;}
+  .hero p.sub{color:var(--dim);font-size:15px;margin:0 auto 6px;max-width:40ch;}
+  .hero p.sub-en{color:rgba(255,247,236,0.55);font-size:13px;margin:0 auto 20px;max-width:42ch;}
+
+  .ticker{display:flex;align-items:flex-end;justify-content:center;gap:5px;height:44px;margin:0 0 22px;overflow:hidden;}
+  .candle{width:6px;border-radius:2px;opacity:0.9;animation:bob 2.4s ease-in-out infinite;}
+  @keyframes bob{0%,100%{transform:scaleY(1);}50%{transform:scaleY(0.7);}}
+  .candle{transform-origin:bottom;}
+
+  /* ---------- MULTICOLOR ANIMATED CTA ---------- */
+  .cta-btn{
+    position:relative;overflow:hidden;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    width:100%;padding:15px 18px;border-radius:16px;border:none;cursor:pointer;
+    text-decoration:none;color:#fff;
+    background:linear-gradient(90deg,#FF9933,#FF3D8B,#8B5CF6,#22D3EE,#22C55E,#FFD23F,#FF9933);
+    background-size:400% 100%;
+    animation:flow 4s linear infinite, glow 1.6s ease-in-out infinite;
+    box-shadow:0 10px 30px -8px rgba(255,61,139,0.7);
+    -webkit-tap-highlight-color:transparent;
+    transition:transform .12s ease;
+  }
+  .cta-btn::after{ /* shine sweep */
+    content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;
+    background:linear-gradient(100deg,transparent,rgba(255,255,255,0.55),transparent);
+    transform:skewX(-20deg);animation:shine 2.4s ease-in-out infinite;
+  }
+  .cta-btn:active{transform:scale(0.97);}
+  .cta-btn .row{display:flex;align-items:center;gap:10px;position:relative;z-index:1;}
+  .cta-btn .main{font-family:'Baloo Bhai 2',sans-serif;font-size:21px;font-weight:800;text-shadow:0 2px 6px rgba(0,0,0,0.35);line-height:1.15;}
+  .cta-btn .en{position:relative;z-index:1;font-size:13px;font-weight:700;letter-spacing:.03em;opacity:0.95;text-shadow:0 1px 4px rgba(0,0,0,0.35);}
+  .cta-btn.is-loading{pointer-events:none;opacity:0.8;}
+  .cta-btn.is-loading .main::after{content:" ...";}
+  @keyframes flow{0%{background-position:0% 50%;}100%{background-position:400% 50%;}}
+  @keyframes glow{
+    0%,100%{box-shadow:0 0 0 0 rgba(255,61,139,0.55),0 10px 30px -8px rgba(255,61,139,0.7);}
+    50%{box-shadow:0 0 0 10px rgba(255,61,139,0),0 10px 40px -4px rgba(139,92,246,0.9);}
+  }
+  @keyframes shine{0%{left:-60%;}60%,100%{left:130%;}}
+
+  .tg-ico{width:30px;height:30px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .cta-note{text-align:center;font-size:12.5px;color:var(--dim);margin-top:10px;}
+  .badge-new{
+    display:inline-block;font-size:11px;font-weight:800;color:#140A2E;background:var(--gold);
+    padding:2px 8px;border-radius:6px;margin-bottom:8px;animation:blink 1s infinite;
+  }
+
+  /* ---------- TRUST ---------- */
+  .trust{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:26px 0 4px;}
+  .trust-item{border-radius:14px;padding:14px 8px;text-align:center;border:1px solid var(--line);background:var(--card);}
+  .trust-item:nth-child(1){border-color:rgba(255,153,51,0.5);}
+  .trust-item:nth-child(2){border-color:rgba(34,197,94,0.5);}
+  .trust-item:nth-child(3){border-color:rgba(34,211,238,0.5);}
+  .trust-num{font-family:'Baloo Bhai 2',sans-serif;font-size:19px;font-weight:800;}
+  .trust-item:nth-child(1) .trust-num{color:var(--saffron);}
+  .trust-item:nth-child(2) .trust-num{color:var(--green);}
+  .trust-item:nth-child(3) .trust-num{color:var(--cyan);}
+  .trust-label{font-size:11px;color:var(--dim);margin-top:2px;}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:30px 0 6px;}
+  .sec-title{font-family:'Baloo Bhai 2',sans-serif;font-size:24px;font-weight:800;margin:0;}
+  .sec-en{font-size:13px;color:var(--dim);margin:0 0 18px;}
+  .learn-list{display:flex;flex-direction:column;gap:12px;}
+  .learn-row{display:flex;gap:14px;align-items:flex-start;padding:16px;border-radius:16px;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--c);}
+  .learn-icon{width:42px;height:42px;flex-shrink:0;border-radius:12px;display:flex;align-items:center;justify-content:center;background:var(--c);}
+  .learn-copy h3{margin:0;font-family:'Baloo Bhai 2',sans-serif;font-size:17px;font-weight:700;}
+  .learn-copy .h3-en{font-size:12px;font-weight:600;color:var(--c);margin-bottom:4px;}
+  .learn-copy p{margin:0;font-size:13.5px;color:var(--dim);}
+
+  .mentor{display:flex;gap:16px;align-items:center;padding:18px;border-radius:16px;
+    background:linear-gradient(135deg,rgba(139,92,246,0.18),rgba(255,61,139,0.12));border:1px solid rgba(139,92,246,0.45);}
+  .mentor img{width:78px;height:78px;border-radius:14px;object-fit:cover;object-position:top center;border:2px solid var(--gold);flex-shrink:0;background:#2a1a55;}
+  .mentor h3{margin:0 0 3px;font-size:16px;}
+  .mentor p{margin:0;font-size:13px;color:var(--dim);}
+
+  .steps{display:flex;flex-direction:column;gap:10px;}
+  .step{display:flex;gap:14px;align-items:center;padding:14px;border-radius:14px;background:var(--card);border:1px solid var(--line);}
+  .step-num{width:36px;height:36px;flex-shrink:0;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;color:#140A2E;}
+  .step:nth-child(1) .step-num{background:var(--saffron);}
+  .step:nth-child(2) .step-num{background:var(--pink);color:#fff;}
+  .step:nth-child(3) .step-num{background:var(--green);}
+  .step h4{margin:0;font-family:'Baloo Bhai 2',sans-serif;font-size:16px;}
+  .step p{margin:0;font-size:12.5px;color:var(--dim);}
+
+  .final-cta{text-align:center;padding:34px 0 30px;}
+  .final-cta h2{font-family:'Baloo Bhai 2',sans-serif;font-size:25px;margin:0 0 2px;}
+  .final-cta .en{font-size:14px;color:var(--dim);margin:0 0 18px;}
+
+  footer{padding:18px 18px 110px;text-align:center;color:rgba(255,247,236,0.45);font-size:11.5px;}
+
+  /* sticky bottom CTA */
+  .sticky{
+    position:fixed;left:0;right:0;bottom:0;z-index:50;padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+    background:linear-gradient(180deg,rgba(20,10,46,0),rgba(20,10,46,0.95) 35%);
+    transform:translateY(120%);transition:transform .3s ease;
+  }
+  .sticky.show{transform:translateY(0);}
+  .sticky .cta-btn{max-width:var(--maxw);margin:0 auto;padding:12px 16px;}
+  .sticky .cta-btn .main{font-size:18px;}
+
+  /* honeypot: invisible to humans, bots that click every link hit it */
+  .hp{position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;opacity:0;}
+
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation:none !important;transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<a href="https://t.me/" class="hp" id="hp" tabindex="-1" aria-hidden="true">join</a>
+
+<header class="top">
+  <div class="logo-ring"><img src="guj.jpg" alt="Gujarati Trader logo" width="70" height="70"></div>
+  <div>
+    <div class="brand-name">Gujarati Trader's<br>Learning Station</div>
+    <div class="brand-gu gu">ગુજરાતી ટ્રેડર</div>
+  </div>
+  <div class="status-pill"><span class="dot"></span>Live</div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="hero-logo"><img src="guj.jpg" alt="" width="124" height="124" fetchpriority="high"></div>
+    <div class="eyebrow gu">મફત દૈનિક માર્કેટ શીખ · Free daily learning</div>
+    <h1 class="gu">અનુમાન નહીં,<br><span class="grad">સમજ સાથે ટ્રેડ કરો</span></h1>
+    <div class="h1-en">Trade with a clear head, not a hunch.</div>
+    <p class="sub gu">દરરોજ માર્કેટ અપડેટ, રિસ્ક મેનેજમેન્ટના પાઠ અને સાચી વાત — ગુજરાતી ટ્રેડર્સ માટે.</p>
+    <p class="sub-en">Daily setups, risk-first lessons and honest market talk for Gujarati traders.</p>
+
+    <div class="ticker" id="ticker" aria-hidden="true"></div>
+
+    <div class="badge-new">● JOIN NOW · હમણાં જોડાઓ</div>
+    <a href="https://t.me/+xZq0mqTH9685NzI1" class="cta-btn js-cta" rel="noopener">
+      <span class="row">
+        <span class="tg-ico"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M21.5 3.5L2.8 10.7c-1 .4-1 1.6.1 1.9l4.7 1.5 1.8 5.6c.3.8 1.3 1 1.9.4l2.6-2.4 4.8 3.5c.7.5 1.7.1 1.9-.7l3.1-14.5c.2-1.1-.9-2-2.2-1.5z" fill="#229ED9"/></svg></span>
+        <span class="main">ટેલિગ્રામ પર મફત જોડાઓ</span>
+      </span>
+      <span class="en">JOIN FREE ON TELEGRAM</span>
+    </a>
+    <div class="cta-note gu">કોઈ ફી નહીં · કોઈ સ્પામ નહીં · ગમે ત્યારે છોડી શકો<br><span style="opacity:.75">No cost · No spam · Leave anytime</span></div>
+
+    <div class="trust">
+      <div class="trust-item"><div class="trust-num gu">દરરોજ</div><div class="trust-label">Daily notes</div></div>
+      <div class="trust-item"><div class="trust-num">100%</div><div class="trust-label gu">મફત · Free</div></div>
+      <div class="trust-item"><div class="trust-num gu">ગુજરાતી</div><div class="trust-label">Simple language</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec-title gu">ચેનલમાં તમને શું મળશે</h2>
+    <p class="sec-en">What you'll get inside — nothing sold, nothing hidden</p>
+    <div class="learn-list">
+      <div class="learn-row" style="--c:#FF9933">
+        <div class="learn-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 17L9 11L13 15L21 7" stroke="#140A2E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 7H21V13" stroke="#140A2E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="learn-copy">
+          <h3 class="gu">દૈનિક માર્કેટ સમજ</h3>
+          <div class="h3-en">Daily market read</div>
+          <p class="gu">માર્કેટ ખુલે તે પહેલાં — શું બદલાયું અને કેમ, સરળ ભાષામાં.</p>
+        </div>
+      </div>
+      <div class="learn-row" style="--c:#FF3D8B">
+        <div class="learn-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3L4 6V12C4 16.5 7.4 20.3 12 21C16.6 20.3 20 16.5 20 12V6L12 3Z" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/></svg></div>
+        <div class="learn-copy">
+          <h3 class="gu">પહેલા રિસ્ક, પછી રિવોર્ડ</h3>
+          <div class="h3-en">Risk before reward</div>
+          <p class="gu">પોઝિશન સાઇઝ અને સ્ટોપ-લોસની આદતો ગુજરાતીમાં સમજાવેલ.</p>
+        </div>
+      </div>
+      <div class="learn-row" style="--c:#22D3EE">
+        <div class="learn-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 5H20V16H9L4 20V5Z" stroke="#140A2E" stroke-width="2.2" stroke-linejoin="round"/></svg></div>
+        <div class="learn-copy">
+          <h3 class="gu">પૂછો, ફક્ત જુઓ નહીં</h3>
+          <div class="h3-en">Ask, don't just watch</div>
+          <p class="gu">ચેનલમાં તમારા સવાલ પૂછો — સાચા સવાલોના સાચા જવાબ.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec-title gu">કોણ શીખવે છે</h2>
+    <p class="sec-en">Who's teaching</p>
+    <div class="mentor">
+      <img src="guj.jpg" alt="Learning Station mentor" width="78" height="78" loading="lazy">
+      <div>
+        <h3>Learning Station Desk</h3>
+        <p class="gu">દૈનિક નોટ્સ અને સભ્યોના સવાલોના જવાબ ચેનલમાં જ — કોઈ પેઇડ કૉલ નહીં, કોઈ ટિપ્સ વેચાણ માટે નહીં.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec-title gu">કેવી રીતે જોડાવું</h2>
+    <p class="sec-en">How it works — 3 simple steps</p>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div><h4 class="gu">બટન દબાવો</h4><p>Tap the button — goes straight to Telegram, no form.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div><h4 class="gu">ચેનલમાં જોડાઓ</h4><p>Tap "Join" on Telegram's screen — you're in.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div><h4 class="gu">પહેલી નોટ વાંચો</h4><p>Today's market breakdown is already waiting.</p></div></div>
+    </div>
+  </section>
+
+  <div class="final-cta">
+    <h2 class="gu">સ્પષ્ટ મનથી ટ્રેડ કરવા તૈયાર છો?</h2>
+    <p class="en">Ready to trade with a clear head? Free today, free tomorrow.</p>
+    <a href="https://t.me/+xZq0mqTH9685NzI1" class="cta-btn js-cta" rel="noopener">
+      <span class="row">
+        <span class="tg-ico"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M21.5 3.5L2.8 10.7c-1 .4-1 1.6.1 1.9l4.7 1.5 1.8 5.6c.3.8 1.3 1 1.9.4l2.6-2.4 4.8 3.5c.7.5 1.7.1 1.9-.7l3.1-14.5c.2-1.1-.9-2-2.2-1.5z" fill="#229ED9"/></svg></span>
+        <span class="main">હમણાં મફત જોડાઓ</span>
+      </span>
+      <span class="en">JOIN FREE NOW</span>
+    </a>
+  </div>
+</main>
+
+<footer class="gu">
+  ગુજરાતી ટ્રેડર્સ લર્નિંગ સ્ટેશન — ફક્ત શૈક્ષણિક માહિતી, રોકાણ સલાહ નથી.<br>
+  Educational content only, not investment advice.
+
+<div style="text-align:center; margin:14px 0 10px 0; padding-top:10px; border-top:1px solid rgba(255,255,255,0.08);">
+            <p style="font-weight:bold; margin-bottom:6px; font-size:11px; color:#94a3b8;">Advertised by : SRS Marketing Agency</p>
+            <a href="https://t.me/srsagency" target="_blank" style="
+                display:inline-block;
+                background-color:#f39405;
+                color:#ffffff;
+                padding:6px 14px;
+                border-radius:6px;
+                text-decoration:none;
+                font-weight:600;
+                font-size:12px;
+                font-family:sans-serif;">
+                📩 Visit @ SRS | Marketing ...
+            </a>
+        </div>
+
+</footer>
+
+<div class="sticky" id="sticky">
+  <a href="https://t.me/+xZq0mqTH9685NzI1" class="cta-btn js-cta" rel="noopener">
+    <span class="row">
+      <span class="tg-ico"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M21.5 3.5L2.8 10.7c-1 .4-1 1.6.1 1.9l4.7 1.5 1.8 5.6c.3.8 1.3 1 1.9.4l2.6-2.4 4.8 3.5c.7.5 1.7.1 1.9-.7l3.1-14.5c.2-1.1-.9-2-2.2-1.5z" fill="#229ED9"/></svg></span>
+      <span class="main">ટેલિગ્રામ પર જોડાઓ · Join</span>
+    </span>
+  </a>
+</div>
+
+
+
+<script>
+/* ============================================================
+   CONFIG — edit only this block
+   ============================================================ */
+var TG_CONFIG = {
+  pixelId: "2309796073091838",
+  inviteHash: "xZq0mqTH9685NzI1",            // part after "t.me/+"
+  eventName: "Lead",
+  contentName: "gujarati_trader_learning_station",
+  minDwellMs: 1500,        // page must be visible this long before a click can count
+  redirectDelayMs: 300,    // time for the pixel beacon to leave the browser
+  appFallbackMs: 1400,     // if Telegram app doesn't open, fall back to the web link
+  dedupHours: 24,          // one Lead per device per 24h
+  reportFiltered: true     // send a custom "FilteredClick" event with the reason (for Events Manager)
+};
+TG_CONFIG.webUrl = "https://t.me/+" + TG_CONFIG.inviteHash;
+TG_CONFIG.appUrl = "tg://join?invite=" + TG_CONFIG.inviteHash;
+
+/* ============================================================
+   Meta Pixel base
+   ============================================================ */
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', TG_CONFIG.pixelId);
+fbq('track', 'PageView');
+
+/* ============================================================
+   Anti-fake-click engine
+   A click counts as a real Lead only if ALL pass:
+   1. browser-trusted event (not script-generated)
+   2. a real finger/mouse press happened on the button (pointerdown/touchstart)
+   3. page has been VISIBLE for minDwellMs (prefetch / background tabs excluded)
+   4. no automation / crawler signals (webdriver, headless, FB crawler UA)
+   5. honeypot link never touched
+   6. not already counted on this device in the last dedupHours
+   Everyone still gets sent to Telegram — only the paid Lead event is filtered.
+   ============================================================ */
+(function(){
+  var visibleMs = 0, visibleSince = document.visibilityState === "visible" ? Date.now() : 0;
+  var humanSignal = false, honeypotHit = false, pressed = null, busy = false;
+  var DEDUP_KEY = "tg_lead_" + TG_CONFIG.pixelId;
+
+  document.addEventListener("visibilitychange", function(){
+    if (document.visibilityState === "visible") { visibleSince = Date.now(); }
+    else if (visibleSince) { visibleMs += Date.now() - visibleSince; visibleSince = 0; }
+  });
+  function totalVisible(){ return visibleMs + (visibleSince ? Date.now() - visibleSince : 0); }
+
+  ["touchstart","touchmove","mousemove","scroll","keydown","wheel"].forEach(function(ev){
+    window.addEventListener(ev, function(e){ if (e.isTrusted !== false) humanSignal = true; }, {passive:true, once:true});
+  });
+
+  document.getElementById("hp").addEventListener("click", function(e){ honeypotHit = true; e.preventDefault(); });
+
+  function isAutomated(){
+    var ua = navigator.userAgent || "";
+    if (navigator.webdriver) return "webdriver";
+    if (/HeadlessChrome|PhantomJS|Puppeteer|Playwright|Selenium|bot\b|crawler|spider|facebookexternalhit|Facebot|Lighthouse/i.test(ua)) return "ua";
+    if (!window.screen || screen.width < 100 || screen.height < 100) return "screen";
+    if (window.outerWidth === 0 && window.outerHeight === 0) return "headless_window";
+    return null;
+  }
+
+  function recentlyFired(){
+    try {
+      var t = parseInt(localStorage.getItem(DEDUP_KEY) || sessionStorage.getItem(DEDUP_KEY) || "0", 10);
+      return t && (Date.now() - t) < TG_CONFIG.dedupHours * 3600 * 1000;
+    } catch(e){ return false; }
+  }
+  function markFired(){
+    var now = String(Date.now());
+    try { localStorage.setItem(DEDUP_KEY, now); } catch(e){}
+    try { sessionStorage.setItem(DEDUP_KEY, now); } catch(e){}
+  }
+
+  function filterReason(evt, btn){
+    if (!evt || evt.isTrusted === false) return "untrusted";
+    if (honeypotHit) return "honeypot";
+    var bot = isAutomated(); if (bot) return "bot_" + bot;
+    if (pressed !== btn) return "no_press";
+    if (totalVisible() < TG_CONFIG.minDwellMs) return "too_fast";
+    if (!humanSignal && evt.detail === 0) return "no_interaction";
+    if (recentlyFired()) return "duplicate";
+    return null;
+  }
+
+  function isMobile(){ return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent || ""); }
+
+  function openTelegram(){
+    if (!isMobile()) { window.location.href = TG_CONFIG.webUrl; return; }
+    // Try the Telegram app directly (skips the t.me "Open in Telegram" page),
+    // fall back to the web link if the app didn't take over.
+    var left = false;
+    var onHide = function(){ if (document.visibilityState === "hidden") left = true; };
+    document.addEventListener("visibilitychange", onHide);
+    window.location.href = TG_CONFIG.appUrl;
+    setTimeout(function(){
+      document.removeEventListener("visibilitychange", onHide);
+      if (!left) window.location.href = TG_CONFIG.webUrl;
+    }, TG_CONFIG.appFallbackMs);
+  }
+
+  function handle(btn, evt){
+    evt.preventDefault();
+    if (busy) return;               // stops double-tap double counting
+    busy = true;
+    setTimeout(function(){ busy = false; }, 2500);
+
+    var reason = filterReason(evt, btn);
+    if (reason) {
+      if (TG_CONFIG.reportFiltered && reason.indexOf("bot_") !== 0 && reason !== "honeypot") {
+        fbq('trackCustom', 'FilteredClick', { reason: reason });
+      }
+      openTelegram();
+      return;
+    }
+
+    btn.classList.add("is-loading");
+    markFired();
+    var eventId = TG_CONFIG.contentName + "_" + Date.now() + "_" + Math.random().toString(36).slice(2,8);
+    fbq('track', TG_CONFIG.eventName, { content_name: TG_CONFIG.contentName }, { eventID: eventId });
+    setTimeout(openTelegram, TG_CONFIG.redirectDelayMs);
+  }
+
+  document.querySelectorAll(".js-cta").forEach(function(btn){
+    var mark = function(e){ if (e.isTrusted !== false) { pressed = btn; humanSignal = true; } };
+    btn.addEventListener("pointerdown", mark, {passive:true});
+    btn.addEventListener("touchstart", mark, {passive:true});
+    btn.addEventListener("mousedown", mark, {passive:true});
+    btn.addEventListener("click", function(evt){ handle(btn, evt); });
+  });
+
+  // Sticky CTA appears once the hero button scrolls away
+  var sticky = document.getElementById("sticky");
+  var heroBtn = document.querySelector(".hero .js-cta");
+  if ("IntersectionObserver" in window && heroBtn) {
+    new IntersectionObserver(function(entries){
+      sticky.classList.toggle("show", !entries[0].isIntersecting);
+    }).observe(heroBtn);
+  }
+})();
+
+/* ============================================================
+   Decorative multicolor candlestick ticker
+   ============================================================ */
+(function(){
+  var el = document.getElementById("ticker"); if (!el) return;
+  var colors = ["#22C55E","#FF3D8B","#FFD23F","#22D3EE","#FF9933","#8B5CF6"];
+  var html = "";
+  for (var i = 0; i < 28; i++) {
+    var h = 10 + Math.round(Math.random() * 34);
+    html += '<div class="candle" style="height:' + h + 'px;background:' + colors[i % colors.length] +
+            ';animation-delay:' + (i * 0.09).toFixed(2) + 's"></div>';
+  }
+  el.innerHTML = html;
+})();
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1574850454128395&ev=PageView&noscript=1"></noscript>
+</body>
+</html>
