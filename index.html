@@ -3,6 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<script>
+/* Facebook/Instagram in-app browser handling.
+   Android: reopen this exact page in Chrome so the Telegram hand-off works (x=1 stops loops).
+   iOS: no reliable JS escape, a small banner is shown instead. */
+(function(){
+  var UA = navigator.userAgent || "";
+  window.__IAB = /FBAN|FBAV|FB_IAB|FBIOS|Instagram/i.test(UA);
+  window.__IOS = /iPhone|iPad|iPod/i.test(UA);
+  var android = /Android/i.test(UA);
+  var done = /[?&]x=1(&|$)/.test(location.search);
+  if (window.__IAB && android && !done) {
+    var q = location.search ? location.search + "&x=1" : "?x=1";
+    var rest = location.host + location.pathname + q;
+    window.__ESCAPING = true;
+    location.replace("intent://" + rest + "#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=" +
+      encodeURIComponent(location.protocol + "//" + rest) + ";end");
+  }
+})();
+</script>
 <title>Gujarati Trader's Learning Station | ગુજરાતી ટ્રેડર</title>
 <meta name="description" content="ગુજરાતી ટ્રેડર્સ માટે મફત દૈનિક માર્કેટ શીખ — Free daily market learning for Gujarati traders on Telegram.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -124,8 +143,6 @@
   .cta-btn .row{display:flex;align-items:center;gap:10px;position:relative;z-index:1;}
   .cta-btn .main{font-family:'Baloo Bhai 2',sans-serif;font-size:21px;font-weight:800;text-shadow:0 2px 6px rgba(0,0,0,0.35);line-height:1.15;}
   .cta-btn .en{position:relative;z-index:1;font-size:13px;font-weight:700;letter-spacing:.03em;opacity:0.95;text-shadow:0 1px 4px rgba(0,0,0,0.35);}
-  .cta-btn.is-loading{pointer-events:none;opacity:0.8;}
-  .cta-btn.is-loading .main::after{content:" ...";}
   @keyframes flow{0%{background-position:0% 50%;}100%{background-position:400% 50%;}}
   @keyframes glow{
     0%,100%{box-shadow:0 0 0 0 rgba(255,61,139,0.55),0 10px 30px -8px rgba(255,61,139,0.7);}
@@ -197,12 +214,21 @@
   /* honeypot: invisible to humans, bots that click every link hit it */
   .hp{position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;opacity:0;}
 
+  .iab-banner{display:none;align-items:center;gap:10px;padding:10px 14px;background:#FFD23F;color:#140A2E;font-size:12.5px;font-weight:600;line-height:1.35;}
+  .iab-banner.show{display:flex;}
+  .iab-banner button{margin-left:auto;border:0;background:#140A2E;color:#fff;border-radius:6px;padding:4px 9px;font-size:12px;cursor:pointer;}
+
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation:none !important;transition:none !important;}
   }
 </style>
 </head>
 <body>
+
+<div class="iab-banner gu" id="iabBanner">
+  <div>ટેલિગ્રામ સરળતાથી ખોલવા: ઉપર જમણી બાજુ <b>⋯</b> દબાવો → <b>“Open in browser”</b><br><span style="font-weight:500">Tip: tap ⋯ → "Open in browser" for a smooth Telegram join.</span></div>
+  <button type="button" id="iabClose">OK</button>
+</div>
 
 <a href="https://t.me/" class="hp" id="hp" tabindex="-1" aria-hidden="true">join</a>
 
@@ -234,7 +260,7 @@
       </span>
       <span class="en">JOIN FREE ON TELEGRAM</span>
     </a>
-    <div class="cta-note gu">કોઈ ફી નહીં · કોઈ સ્પામ નહીં · ગમે ત્યારે છોડી શકો<br><span style="opacity:.75">No cost · No spam · Leave anytime</span></div>
+    <div class="cta-note gu">કોઈ ફી નહીં · કોઈ સ્પામ નહીં · ગમે ત્યારે છોડી શકો<br><span style="opacity:.75">No cost · No spam · Leave anytime</span><br><span style="color:var(--gold);font-weight:600">ટેલિગ્રામ ઍપ ઇન્સ્ટોલ હોવી જોઈએ · Telegram app required</span></div>
 
     <div class="trust">
       <div class="trust-item"><div class="trust-num gu">દરરોજ</div><div class="trust-label">Daily notes</div></div>
@@ -291,7 +317,7 @@
     <p class="sec-en">How it works — 3 simple steps</p>
     <div class="steps">
       <div class="step"><div class="step-num">1</div><div><h4 class="gu">બટન દબાવો</h4><p>Tap the button — goes straight to Telegram, no form.</p></div></div>
-      <div class="step"><div class="step-num">2</div><div><h4 class="gu">ચેનલમાં જોડાઓ</h4><p>Tap "Join" on Telegram's screen — you're in.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div><h4 class="gu">ટેલિગ્રામમાં “Join” દબાવો</h4><p>Telegram opens — tap "Request to Join" / "Join". That last tap is what counts.</p></div></div>
       <div class="step"><div class="step-num">3</div><div><h4 class="gu">પહેલી નોટ વાંચો</h4><p>Today's market breakdown is already waiting.</p></div></div>
     </div>
   </section>
@@ -348,43 +374,41 @@
    ============================================================ */
 var TG_CONFIG = {
   pixelId: "2309796073091838",
-  inviteHash: "xZq0mqTH9685NzI1",            // part after "t.me/+"
+  inviteHash: "xZq0mqTH9685NzI1",   // part after "t.me/+"
   eventName: "Lead",
   contentName: "gujarati_trader_learning_station",
-  minDwellMs: 1500,        // page must be visible this long before a click can count
-  redirectDelayMs: 300,    // time for the pixel beacon to leave the browser
-  appFallbackMs: 1400,     // if Telegram app doesn't open, fall back to the web link
-  dedupHours: 24,          // one Lead per device per 24h
-  reportFiltered: true     // send a custom "FilteredClick" event with the reason (for Events Manager)
+  minDwellMs: 1500,                 // page must be visible this long before a click counts as a Lead
+  dedupHours: 24,                   // one Lead per device per 24h
+  reportFiltered: true              // send custom "FilteredClick" event with the reason
 };
-TG_CONFIG.webUrl = "https://t.me/+" + TG_CONFIG.inviteHash;
-TG_CONFIG.appUrl = "tg://join?invite=" + TG_CONFIG.inviteHash;
 
-/* ============================================================
-   Meta Pixel base
-   ============================================================ */
-!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-document,'script','https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', TG_CONFIG.pixelId);
-fbq('track', 'PageView');
-
-/* ============================================================
-   Anti-fake-click engine
-   A click counts as a real Lead only if ALL pass:
-   1. browser-trusted event (not script-generated)
-   2. a real finger/mouse press happened on the button (pointerdown/touchstart)
-   3. page has been VISIBLE for minDwellMs (prefetch / background tabs excluded)
-   4. no automation / crawler signals (webdriver, headless, FB crawler UA)
-   5. honeypot link never touched
-   6. not already counted on this device in the last dedupHours
-   Everyone still gets sent to Telegram — only the paid Lead event is filtered.
-   ============================================================ */
 (function(){
+  if (window.__ESCAPING) return;    // page is being reopened in Chrome; let that copy do the tracking
+
+  /* ---------- Meta Pixel base ---------- */
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', TG_CONFIG.pixelId);
+  fbq('track', 'PageView');
+
+  /* ---------- iOS in-app browser banner ---------- */
+  var banner = document.getElementById("iabBanner");
+  if (window.__IAB && window.__IOS && banner) {
+    banner.classList.add("show");
+    document.getElementById("iabClose").addEventListener("click", function(){ banner.classList.remove("show"); });
+  }
+
+  /* ============================================================
+     Lead filter. The click is NEVER delayed or cancelled:
+     buttons are real <a href="https://t.me/+..."> links, so the browser
+     keeps the user's tap (user-activation) and Telegram opens normally.
+     Only the Lead event is filtered, never the navigation.
+     ============================================================ */
   var visibleMs = 0, visibleSince = document.visibilityState === "visible" ? Date.now() : 0;
-  var humanSignal = false, honeypotHit = false, pressed = null, busy = false;
+  var humanSignal = false, honeypotHit = false, pressed = null;
   var DEDUP_KEY = "tg_lead_" + TG_CONFIG.pixelId;
 
   document.addEventListener("visibilitychange", function(){
@@ -407,7 +431,6 @@ fbq('track', 'PageView');
     if (window.outerWidth === 0 && window.outerHeight === 0) return "headless_window";
     return null;
   }
-
   function recentlyFired(){
     try {
       var t = parseInt(localStorage.getItem(DEDUP_KEY) || sessionStorage.getItem(DEDUP_KEY) || "0", 10);
@@ -419,7 +442,6 @@ fbq('track', 'PageView');
     try { localStorage.setItem(DEDUP_KEY, now); } catch(e){}
     try { sessionStorage.setItem(DEDUP_KEY, now); } catch(e){}
   }
-
   function filterReason(evt, btn){
     if (!evt || evt.isTrusted === false) return "untrusted";
     if (honeypotHit) return "honeypot";
@@ -431,53 +453,28 @@ fbq('track', 'PageView');
     return null;
   }
 
-  function isMobile(){ return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent || ""); }
-
-  function openTelegram(){
-    if (!isMobile()) { window.location.href = TG_CONFIG.webUrl; return; }
-    // Try the Telegram app directly (skips the t.me "Open in Telegram" page),
-    // fall back to the web link if the app didn't take over.
-    var left = false;
-    var onHide = function(){ if (document.visibilityState === "hidden") left = true; };
-    document.addEventListener("visibilitychange", onHide);
-    window.location.href = TG_CONFIG.appUrl;
-    setTimeout(function(){
-      document.removeEventListener("visibilitychange", onHide);
-      if (!left) window.location.href = TG_CONFIG.webUrl;
-    }, TG_CONFIG.appFallbackMs);
-  }
-
-  function handle(btn, evt){
-    evt.preventDefault();
-    if (busy) return;               // stops double-tap double counting
-    busy = true;
-    setTimeout(function(){ busy = false; }, 2500);
-
-    var reason = filterReason(evt, btn);
-    if (reason) {
-      if (TG_CONFIG.reportFiltered && reason.indexOf("bot_") !== 0 && reason !== "honeypot") {
-        fbq('trackCustom', 'FilteredClick', { reason: reason });
-      }
-      openTelegram();
-      return;
-    }
-
-    btn.classList.add("is-loading");
-    markFired();
-    var eventId = TG_CONFIG.contentName + "_" + Date.now() + "_" + Math.random().toString(36).slice(2,8);
-    fbq('track', TG_CONFIG.eventName, { content_name: TG_CONFIG.contentName }, { eventID: eventId });
-    setTimeout(openTelegram, TG_CONFIG.redirectDelayMs);
-  }
-
   document.querySelectorAll(".js-cta").forEach(function(btn){
     var mark = function(e){ if (e.isTrusted !== false) { pressed = btn; humanSignal = true; } };
     btn.addEventListener("pointerdown", mark, {passive:true});
     btn.addEventListener("touchstart", mark, {passive:true});
     btn.addEventListener("mousedown", mark, {passive:true});
-    btn.addEventListener("click", function(evt){ handle(btn, evt); });
+
+    // No preventDefault, no setTimeout, no location.href: the browser follows the href itself.
+    btn.addEventListener("click", function(evt){
+      var reason = filterReason(evt, btn);
+      if (reason) {
+        if (TG_CONFIG.reportFiltered && reason.indexOf("bot_") !== 0 && reason !== "honeypot") {
+          fbq('trackCustom', 'FilteredClick', { reason: reason });
+        }
+        return;
+      }
+      markFired();
+      var eventId = TG_CONFIG.contentName + "_" + Date.now() + "_" + Math.random().toString(36).slice(2,8);
+      fbq('track', TG_CONFIG.eventName, { content_name: TG_CONFIG.contentName }, { eventID: eventId });
+    });
   });
 
-  // Sticky CTA appears once the hero button scrolls away
+  /* Sticky CTA appears once the hero button scrolls away */
   var sticky = document.getElementById("sticky");
   var heroBtn = document.querySelector(".hero .js-cta");
   if ("IntersectionObserver" in window && heroBtn) {
@@ -502,6 +499,6 @@ fbq('track', 'PageView');
   el.innerHTML = html;
 })();
 </script>
-<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1574850454128395&ev=PageView&noscript=1"></noscript>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=3001151236903306&ev=PageView&noscript=1"></noscript>
 </body>
 </html>
